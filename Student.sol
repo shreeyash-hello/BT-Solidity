@@ -9,7 +9,7 @@ contract Student_management
     
     Student [] Students
 
-    function add_stud(intstud_id,string memory name, string memory department) public{
+    function add_stud(int stud_id,string memory name, string memory department) public{
         Student memory stud = Student(stud_id,name,department);
         Students.push(stud);
     }
