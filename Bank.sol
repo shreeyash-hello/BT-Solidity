@@ -69,21 +69,26 @@ contract banking
 
 ####################################################################################################################################
 
-pragma solidity ^0.4.19;
-
-contract Bank {
-
-    mapping(address => uint256) public balanceOf;   // balances, indexed by addresses
-
-    function deposit(uint256 amount) public payable {
-        require(msg.value == amount);
-        balanceOf[msg.sender] += amount;     // adjust the account's balance
+//SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8;
+contract banking
+{
+    mapping(address=>uint) private user_account;
+    function deposit(uint amount) public payable returns(string memory)
+    {
+        user_account[msg.sender] += amount;
+        return "Deposited Successfully";
     }
-
-    function withdraw(uint256 amount) public {
-        require(amount <= balanceOf[msg.sender]);
-        balanceOf[msg.sender] -= amount;
-        msg.sender.transfer(amount);
+    function withdraw(uint amount) public payable returns(string memory)
+    {
+        require(user_account[msg.sender]>amount,"Insufficient Balance");
+        require(amount>0,"Amount should be more than zero");
+        user_account[msg.sender]=user_account[msg.sender]-amount;
+        return "Withdrawl Successful";
+    }
+    function user_balance() public view returns(uint)
+    {
+        return user_account[msg.sender];
     }
 }
 
